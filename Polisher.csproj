@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{00CC9E5A-888E-4232-8B14-A7B04DAE8A12}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>DustBlower</RootNamespace>
+    <AssemblyName>DustBlower</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MathUtils">
+      <HintPath>..\..\whatever\MathUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fundamentals\DataStructures.cs" />
+    <Compile Include="Types\Fractions.cs" />
+    <Compile Include="Utils\GraphicsUtils.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Fundamentals\Interfaces.cs" />
+    <Compile Include="Fundamentals\Factories.cs" />
+    <Compile Include="MyOLevel\1. Numbers\Basics.cs" />
+    <Compile Include="MyOLevel\1. Numbers\Decimals.cs" />
+    <Compile Include="MyOLevel\1. Numbers\Factors.cs" />
+    <Compile Include="MyOLevel\1. Numbers\Fractions.cs" />
+    <Compile Include="MyOLevel\1. Numbers\Logarithms.cs" />
+    <Compile Include="MyOLevel\1. Numbers\Percentages.cs" />
+    <Compile Include="MyOLevel\1. Numbers\Powers.cs" />
+    <Compile Include="MyOLevel\1. Numbers\RatioProportion.cs" />
+    <Compile Include="MyOLevel\1. Numbers\RootsSurds.cs" />
+    <Compile Include="MyOLevel\1. Numbers\SequencesSeries.cs" />
+    <Compile Include="Fundamentals\Questions.cs" />
+    <Compile Include="questionsImage.cs" />
+    <Compile Include="MathComms.cs" />
+    <Compile Include="Types\Surds.cs" />
+    <Compile Include="MyOLevel\UnusedQuestions.cs" />
+    <Compile Include="Utils\NumberUtils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="EmptyTextFile.txt" />
+    <None Include="100000.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MyOLevel\Algebra\" />
+    <Folder Include="MyOLevel\Geometry\" />
+    <Folder Include="MyOLevel\Graphs\" />
+    <Folder Include="MyOLevel\StatisticsProbability\" />
+    <Folder Include="MyOLevel\Trigonometry\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\whatever\Fangorn\Fangorn.csproj">
+      <Project>{50ee4e59-44e9-4495-ba8b-76dc42718bae}</Project>
+      <Name>Fangorn</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

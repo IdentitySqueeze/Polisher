@@ -1,0 +1,1152 @@
+﻿        //[aid], [eix], [question]
+        //match val, filter if selection
+        //send ix to aid
+        //
+        //update ix status
+        //if solved, send pop to gw
+        //
+        //delete entry
+        //pop
+        //delete/null object
+        //
+        //advance aix
+        //retrieve ansfactory
+        //generate next aid
+        //generate tidy x location
+        //ask factory for ans, pass aid, x
+        //..
+        //receive ans
+        //call GenerateAnswer(), add [aid], [eix], [question] to list
+        //
+        //select ans type
+        //generate
+        //return [aid][eix][question]'s to gw
+        //
+        //add to onScreens
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                // brackets y/n
+                // put back in terms
+                // carry fwd calcs
+                //["96 / ((6 / 2) + 4)"][8]
+
+
+
+                //i++;//<== important
+                //if (i >= qParams.terms)
+                //    continue;
+
+                ////TERM 2
+                ////choose range
+                //rng = rnd.Next(0, qParams.numberRanges.Count);
+                //rngStart = qParams.numberRanges[rng][0];
+                //rngEnd = qParams.numberRanges[rng][1];
+                ////create term
+                //term = rnd.Next(rngStart, rngEnd);
+
+                ////topText
+                //sb.Append(qParams.brackets ? "( " : "");
+                //sb.Append(term1).Append(" ").Append(op).Append(" ").Append(term2);
+                //sb.Append(qParams.brackets ? " ) " : " ");
+
+                //if (brackets) {
+                //    answer = eval(term1, op, term2);
+                //}
+
+                //
+                // (6 / 2)                         [3] div
+                // (6 / 2) + 4                    [12] plu
+                // ((6 / 2) + 4) [12] (a) * 8 (b) [96] (working..)
+                // 96 / ((6 / 2) + 4)              [8] div
+                //
+                //
+                //int-only div op'ing terms must always pair with at least one on-the-fly'd term
+                //    .
+                //              Bung a non-div op step in the middle of the div'ing section as long as there 
+                // .     .      are more ungenerated terms left than unused div ops and you bracket it (and brackets==true).
+                //              
+                //If there are divs but no decimals there must be brackets.
+                // Divs without integers break the number ranges.
+                //
+                // 1 - 4 - 5 - 1 : left to right
+                // 1 + 4 + 5 + 1 : (any)
+                // 1 * 4 * 5 * 1 : (any)
+                // 1 / 4 / 5 / 1 : left to right
+                //
+                // (possibly div'd terms)..,4,1,3,7,12,6,8
+                // (divs possibly used) * * + - 
+                //
+                // always left to right from here on in (?)
+                //
+                // grab term pairs + op, leave any single
+                // brackets y/n
+                // put back in terms
+                // carry fwd calcs
+                //["96 / ((6 / 2) + 4)"][8]
+                //["4"][4]
+                //["1"][1]
+                //["3"][3]
+                //["7"][7]
+                //["12"][12]
+                //["6"][6]
+                //["8"][8]
+                //
+                // 
+                // 3 new terms:
+                //["(4 + 1)"] [5]     //retrieve text  ("4")("1") add op "+" store new text ("(4 + 1)") + calc op calc (5)
+                //["(3 * 7)"] [21]    //retrieve text  ("3")("7") add op "*" store new text ("(3 * 7)") + calc op calc ()
+                //["12 - 6"]  [6]     //retrieve text ("12")("6") add op "-" store new text ("12 - 6")  + calc op calc ()
+                //--------------
+                //put back in:
+                //["(4 + 1)"] [5]     //text, calc
+                //["(3 * 7)"] [21]
+                //["12 - 6"]  [6]
+                //["8"]       [8]
+                //--------------
+                //Go again:
+                //["12 - 6"][6] / ["8"][8] //retrieve text ("12 - 6")("8") and op "/" store new text ("12 - 6 / 8") + calc op calc (30)
+                // ["(4 + 1)"] [5]  * ["12 - 6"][6] //retrieve text ("(4 + 1)")("12 - 6") and op "*" store new text ("(4 + 1) * (12 - 6)") + calc op calc (30)
+                // ["(3 * 7)"] [21] /      ["8"][8] 
+                //--------------
+
+                // + + - - / / * * 
+                //start with plus & minus
+                // a * b = c == c / a [b], c / b [a]
+                // a - b = c == c + b [a], a - c [b]
+                // a + b = c == c - a [b], c + b [a]
+                // a / b = c == c * b [a], a / c [b]
+                
+                
+                
+                
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+                
+                
+                
+                
+                
+                
+                // this
+                // is
+                // a
+                // giant
+                // pain
+                // in
+                // the
+                // rear
+                // Math fun now hijacked by computer science learning
+                // not what I wanted to learn
+
+                //push the whole string into an eval thing and have it do it
+                //or
+                //somethng else
+                //
+                //
+                // 20 / 5 / 2 + (9 / 3 + (6 + 6)) * 3 / 5
+                // //+*/
+                // r/+*/
+                //  r+*/
+                //       expand *
+                //        /+
+                //        r+
+                //             expand +
+                //              r
+                //         r
+                //  r+r/
+                //  r+ r
+                //     r
+                //
+                // or do the brackets first, div & mul, plus & minus
+                //
+                //  Val = allOfThese(
+                //  divAndMul pass
+                //  left-first
+                //   /+*/
+                //   (20 / 5) /+*/
+                //      4     /+*/
+                //  ((20 / 5) / 2)+*/
+                //         2      +*/
+                //  ((20 / 5) / 2)+*/ expand the *, pass in everything between first '(' and last ')'
+                //         2                             
+                //  ((20 / 5) / 2)+(9 / 3 + (6 + 6))*/ 
+                //         2      +       15        */ 
+                //  ((20 / 5) / 2)+((9 / 3 + (6 + 6))*3)/ 
+                //         2      +           45        / 
+                //  ((20 / 5) / 2)+(((9 / 3 + (6 + 6))*3)/5)
+                //         2      +              9         
+                //  plusAndMinus pass
+                //  (((20 / 5) / 2)+(((9 / 3 + (6 + 6))*3)/5))
+                //                    11
+                //
+                //  wrap in bracketsmremove afterwards
+                //  while(!eos){
+                //   eat until op or bracket
+                //   if (!bBrackets)
+                //     if term
+                //       term 
+                //     if op
+                //       op
+                //   if opening
+                //     brackets++; bBrackets=true
+                //   if closing
+                //     brackets--; if brackets==0 bBrackets=false
+                //  }
+                //  
+
+                // generate all ops, sort
+
+                // generate all terms
+                //for (int i = 0; i < qParams.terms; i++)
+                //{
+                    //if (qParams.ops[oix] == '/' && !qParams.decimals)
+                    //{ // implies qparams.brackets
+                      //      if (terms.count > 0 && rnd.Next(0,1)==1){   //Fancy nesting?
+                      //          pick 1 existing (div) term (a)
+                      //          gen (b)
+                      //      }else{
+                      //          gen any two nums 2,3 
+                      //      }
+                      //      //2 * 3 = 6
+                      //      //a * b = c
+                      //      add(c) div add(a), calc = (b)  // (a) is always the expression, (b) is always the calc
+                      //      ["(6 / 2)"][3]
+                      //      add to terms
+                      //      remove div from ops
+                      //      termsUsed++;
+                      //      //Bung a non-div in here?
+                      //      if(terms - termsUsed > unusedDivOps){ //&& rnd.Next(0,1)==1 
+                      //         grab a div'd term from terms (a)
+                      //         generate (b)
+                      //         calc
+                      //         add brackets
+                      //         add to terms
+                      //         remove op
+                      //         termsUsed++
+                    //}
+                    //   repeat until divs exhausted
+                    
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                //List<term> terms = new List<term>();
+                //Queue<char> ops = new Queue<char>();
+                //StringBuilder sbOps = new StringBuilder();                      // Generate ops 
+                //for (int o=0; o<qParams.terms-1; o++)                           // queue them div first
+                //    sbOps.Append(qParams.ops[rnd.Next(0,qParams.ops.Length)]);
+                //string unqueuedOps = sbOps.ToString();
+                //string opsLookup = "/*-+";
+                //for(int j=0; j<opsLookup.Length; j++)
+                //    for (int i = 0; i < unqueuedOps.Length; i++)
+                //        if (unqueuedOps[i] == opsLookup[j])
+                //            ops.Enqueue(opsLookup[j]);
+
+                //topText = "";
+                //botText = new List<aDets>();
+                ////   rnd rest of terms
+                //double term, value = 0.0;
+                //int rng, rngStart, rngEnd = 0;
+                //term term1, term2;
+                //for (int j = 1; j <= qParams.terms; j++)
+                //{
+                //    rng = rnd.Next(0, qParams.numberRanges.Length/2);
+                //    rngStart = qParams.numberRanges[rng, 0];
+                //    rngEnd = qParams.numberRanges[rng, 1]+1;
+                //    //Console.Write("rng: " + rngStart + ", " + rngEnd);
+                //    //create term
+                //    term = (Double)rnd.Next(rngStart, rngEnd);
+                //    terms.Add(new term("" + term, term));
+                //}                    
+                
+                //char op;
+                //StringBuilder sb = new StringBuilder();
+
+                //int t1, t2 = 0;
+                //while (terms.Count>1) {
+
+                //    // grab term pairs + op, leave any single
+                //    //Please work
+                //    t1 = rnd.Next(0,terms.Count);
+                //    term1 = terms[t1];
+                //    terms.Remove(terms[t1]);
+
+                //    t2 = rnd.Next(0,terms.Count);
+                //    term2 = terms[t2];
+                //    terms.Remove(terms[t2]);
+
+                //    //Choose op
+                //    op = ops.Dequeue();//Should be divs first...
+                //    //terms calc
+                //    switch (op)
+                //    {
+                //        case '+':
+                //            value = term1.calc + term2.calc;
+                //            break;
+                //        case '-':
+                //            value = term1.calc - term2.calc;
+                //            break;
+                //        case '/':
+                //            value = term1.calc / term2.calc;
+                //            break;
+                //        case '*':
+                //            value = term1.calc * term2.calc;
+                //            break;
+                //        default:
+                //            break;
+                //    }
+                //    //terms.Enqueue(new term(term1.text + " " + op + " " + term2.text, value));
+                //    terms.Add(new term(sb.Append(term1.text).Append(" ").Append(op).Append(" ").Append(term2.text).ToString(),value));
+                //    sb.Clear();
+                //}//while                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                            #region DrawingStuff
+            //public override void Draw(Graphics graphics)
+            //{
+            //    DrawContainer(graphics);
+            //    DrawTop(graphics);
+            //    DrawBot(graphics);
+            //}
+            //private void DrawContainer(Graphics graphics)
+            //{
+            //    //rect, shadow, border
+            //}
+            //private void DrawTop(Graphics graphics)
+            //{
+
+            //}
+            //public virtual void DrawBot(Graphics graphics)
+            //{
+            //    float x, y;
+            //    Color colour = Color.Black;
+            //    x = location.X + 10; //whatever
+            //    y = location.Y + 10; //whatever
+            //    //drawText( x, y, topText, colour );      //Or whatever
+            //    for (int i = 0; i < botText.Count; i++)
+            //    {
+            //        //TODO: symbols, font, un-type-ables
+            //        colour = botText[i].answered && !(" ,()/^*-+._|\\<>%".Contains(botText[i].charString)) ? Color.Blue : Color.Black;
+            //        //drawText( x, y, botText[i].charString, colour );
+            //        x += (botText[i].charString.Length * genericDigitWidth);
+            //    }
+            //}
+            #endregion
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+    public struct DiFraction{
+        public static bool ReduceNew{ get; set; }
+        public int numerator { get; set; }
+        public int denominator { get; set; }
+        public DiFraction(int n, int d, bool r=false){
+            numerator=n;
+            denominator=d;
+            ReduceNew=r;
+        }
+        public DiFraction(string f, bool r=false){
+            int n, d=0;
+            string[] inComing=Regex.Split(f, "/");
+            Int32.TryParse(inComing[0], out n);
+            Int32.TryParse(inComing[1], out d);
+            numerator  = n;
+            denominator= d;
+            ReduceNew=r;
+        }
+        //public Fraction(double dec){
+        // while (i) 
+        // if(num == Math.Floor(num) or i ==10) break;
+        // 123.4567 == floor(123.4567) = x
+        // 1234.567 == floor(1234.567) = x
+        // 12345.67 == floor(12345.67) = x
+        // 123456.7 == floor(123456.7) = x
+        // 1234567. == floor(1234567.) = /
+        // 
+        // #decimals = i
+        // 
+        //}
+        public double ToDecimal()=>(double)numerator/(double)denominator;
+        public override string ToString()=>$@"{numerator}/{denominator}";
+        // -- operators -- 
+        //public static Fraction operator +(Fraction a, Fraction b)=>ReduceNew?FractionUtils.Reduce(Add(a,b), new int[]{}):Add(a,b);
+        //public static Fraction operator -(Fraction a, Fraction b)=>ReduceNew?FractionUtils.Reduce(Subtract(a,b), new int[]{}):Subtract(a,b);
+        //public static Fraction operator /(Fraction a, Fraction b)=>new Fraction();
+        //public static Fraction operator *(Fraction a, Fraction b)=>new Fraction();
+        //private static Fraction Add(Fraction a, Fraction b)=>new Fraction(a.numerator*b.denominator+b.numerator*a.denominator,a.denominator*b.denominator);
+        //private static Fraction Subtract(Fraction a, Fraction b)=>new Fraction(a.numerator*b.denominator-b.numerator*a.denominator,a.denominator*b.denominator);
+        //public static Fraction operator ++(Fraction a, Fraction b)=>a+b;
+        //public static Fraction operator +-(Fraction a, Fraction b)=>Reduce(a+b);
+    }
+    //TODO just have one.
+            
+            
+            
+More comfort with arrays
+More comfort with numerics & maths
+Bit better with Lists too
+Bit better with inheritance etc
+Bit better with basic loops & variables etc
+Better with System.Security & random numbers
+That basic evaluator
+That fraction class
+Working Regex back-references
+A better understanding of datatypes
+Operator overloads
+Outflow management
+Refreshed my recursion (albeit maybe uneccesarily)
+    decimals
+    Contains/IsDigit/Count/Length/Substring
+    To grips with Math.Pow & decimal shifting
+    Regex replace/success/match/split
+    casting, Cast<T>(), TryParse
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+                            }else if("/*-+".Contains(term[i])){ //   [10/ ____]    [10/(____]    [10/8___]    [10-8____]   [10/*____]    [10--____]
+    
+    
+                            ((term[i]==' ' || term[i]=='\0') && "+-/*".Contains(term[i+1]) && (term[i+2]==' ' || term[i+2]=='(')) ||                 
+                            ((term[i]==' ' || term[i]=='\0') && "+-/*".Contains(term[i+1]) && (char.IsDigit(term[i+2]) || "+-".Contains(term[i+2]))) 
+                            ){ //integer                                                                                                             
+                                                                                                                                                 
+                            ftoe.term = sign+term.Substring(d, i-d);
+                            ftoe.op=term[i+1];
+                            //i+=2; //op & space
+                        }else{ // -- mixed/vulgar --
+                            // -- integer (optional) --
+                            if(term[i]==' '){
+                                i++;
+                                while(Char.IsDigit(term[i]))//mixed fractional part shouldn't be signed
+                                    i++;
+                            }
+                            // -- numerator --
+                            while(!eos && Char.IsDigit(term[i])){
+                                i++;
+                                if(i==term.Length) //@eos
+                                    eos=true;
+                            }
+                            // -- slash --
+                            if(!eos && term[i]!='/') 
+                                Console.WriteLine("slash missing");
+                            i++;
+                            if(i==term.Length) //@eos
+                                throw new ArgumentException("invalid input string");
+                            // -- denominator --
+                            while(!eos && Char.IsDigit(term[i])){                            
+                                i++;
+                                if(i==term.Length) //@eos
+                                    eos=true;
+                            }
+                            ftoe.term = sign+term.Substring(d, i-d);
+                            
+                            // -- op --
+                            if(eos && ftoe.op!='\0' ){ //(term)
+                                ftoe.op=term[i];
+                            }
+                            if(!eos){ //should be an op             //(term)+
+                                while(!eos && !$@"+-*/".Contains(term[i]))
+                                    i++;
+                                ftoe.op=term[i];
+                            }
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+    public class FractionTermOpEvaluator{ 
+        // int/fraction/mixed fraction term op evaluator
+        // 
+        // [..]   optional
+        // ops:   /*-+
+        // types: <int>
+        // signs: [+-]
+        //        
+        // Expressions  1..n
+        // [sign]<int> <op>              (integer)
+        // [sign]<int>/<int> <op>        (vulgar)
+        // [sign]<int> <int>/<int> <op>  (mixed)
+        // [sign]( exp ) <op>            (brackets)
+        //        
+        // Final term   1
+        // [sign]<int>                   (integer)
+        // [sign]<int>/<int>             (vulgar)
+        // [sign]<int> <int>/<int>       (mixed)
+        // [sign]( exp )                 (brackets)
+        //        
+        public string term{ get; set; }
+        public char op {get; set; }
+        public List<FractionTermOpEvaluator> termOps {get; set; } = new List<FractionTermOpEvaluator>();
+
+        public void ParseToList(){
+            FractionTermOpEvaluator ftoe;
+            string sign=string.Empty;
+            bool eos=false;
+            int braces = 0;
+            term=term.Trim();
+            if(!"-+(".Contains(term[0])&& !char.IsDigit(term[0]) || term.Length==0)
+                throw new ArgumentException("invalid input string");
+            for(int i=0; i<term.Length;i++){
+                while(term[i]==' ')
+                    i++;
+                // -- sign ----------------------------------------------
+                if(term[i]=='-'){ //not ops because ops are taken care of in the branches
+                    sign="-";
+                    i++;
+                    while(term[i]==' ')
+                        i++;
+                    if("*/".Contains(term[i])) // -- sign, op --
+                        throw new ArgumentException("invalid input string");
+                }
+                if(term[i]=='+'){
+                    i++;
+                    while(term[i]==' ')
+                        i++;
+                    if ("*/".Contains(term[i])) // -- sign, op --
+                        throw new ArgumentException("invalid input string");
+                }
+                while(term[i]==' ')
+                    i++;
+                // -- braces ----------------------------------------------
+                if (term[i]=='('){
+                    ftoe = new FractionTermOpEvaluator();
+                    int b = i;
+                    braces = 1;
+                    do
+                    {
+                        i++;
+                        if(i==term.Length){
+                            throw new ArgumentException("invalid input string");
+                        } else if (term[i] == '('){
+                            braces++;
+                        } else if (term[i] == ')'){
+                            braces--;
+                        }
+                    } while (braces > 0);
+                    ftoe.term = sign+term.Substring(b, (i+1)-b);
+                    // -- op --
+                    if(i<term.Length){ 
+                        while(!$@"+-*/".Contains(term[i])){
+                            i++;
+                            if(i==term.Length){ //@eos
+                                eos=true;
+                                break;
+                            }else if(char.IsDigit(term[i])){
+                                throw new ArgumentException("invalid input string");
+                            }
+                        }
+                        if(i!=term.Length)
+                            ftoe.op=term[i];
+                    }
+                    termOps.Add(ftoe);
+                    sign=string.Empty;
+
+               }else if(Char.IsDigit(term[i]) && !eos){
+
+                // -- digits ----------------------------------------------
+                    ftoe = new FractionTermOpEvaluator();
+                    int d = i;
+                    while(Char.IsDigit(term[i])){                            
+                        i++;
+                        if(i==term.Length) {//@eos, integer
+                            eos=true;
+                            break; 
+                        }
+                    }
+                    if(eos){ //integer $
+                        ftoe.term = sign+term.Substring(d, i-d);
+                    }else{
+                        // -- int or mixed --
+                        if(term[i]==' '){
+                            while(term[i]==' ')
+                                i++;
+                            if(term[i]=='(')
+                                throw new ArgumentException("invalid input string");    
+                            if(char.IsDigit(term[i])){ //       -- mixed --
+
+                                // -- fractional part --
+                                while(Char.IsDigit(term[i])){
+                                    i++;
+                                    if(i==term.Length) //eos
+                                        throw new ArgumentException("invalid input string");
+                                }
+                                if(term[i]!='/')
+                                    throw new ArgumentException("invalid input string");
+                                i++; // -- slash --
+                                if(!Char.IsDigit(term[i]))
+                                    throw new ArgumentException("invalid input string");
+                                while(Char.IsDigit(term[i])){
+                                    i++;
+                                    if(i==term.Length){ //eos
+                                        eos=true;
+                                        break;
+                                    }
+                                }
+                                ftoe.term = sign+term.Substring(d, i-d);
+                                // -- op --
+                                if(!eos){
+                                    while(!eos && !$@"+-*/".Contains(term[i]))
+                                        i++;
+                                    if(!eos)
+                                        ftoe.op=term[i];
+                                }
+
+                            }else{ // /*-+   sign or op         -- integer -- 
+                                // -- integer --
+                                i--;
+                                ftoe.term = sign+term.Substring(d, i-d);
+
+                                // -- op --
+                                i++;
+                                ftoe.op=term[i];
+
+                            }
+                        }else if(term[i]=='/'){ // -- int or fraction --
+                            i++;
+                            if(term[i]==' '){          //       -- integer --
+                                // -- integer --
+                                i--;
+                                ftoe.term = sign+term.Substring(d, i-d);
+
+                                // -- op --
+                                i++; //here
+                                ftoe.op=term[i];
+
+                                if(i==term.Length) //eos
+                                    throw new ArgumentException("invalid input string");
+                                
+                            }else if(char.IsDigit(term[i])){ // -- fraction --
+                                // -- denominator --
+                                while(Char.IsDigit(term[i])){
+                                    i++;
+                                    if(i==term.Length){ //eos
+                                        eos=true;
+                                        break;
+                                    }
+                                }
+                                ftoe.term = sign+term.Substring(d, i-d);
+
+                                // -- op --
+                                if(!eos){
+                                    while(!eos && !$@"+-*/".Contains(term[i]))
+                                        i++;
+                                    if(!eos)
+                                        ftoe.op=term[i];
+                                }
+
+                            }else if("-+".Contains(term[i])){ // -- integer --
+                                // -- integer --
+                                i--;
+                                ftoe.term = sign+term.Substring(d, i-d);
+                                // -- op --
+                                ftoe.op=term[i];
+
+                            }else if("*/".Contains(term[i])){ // -- two ops --
+                                throw new ArgumentException("invalid input string");    
+                            }
+
+                        }else if("*-+".Contains(term[i])){ // -- integer
+                                ftoe.term = sign+term.Substring(d, i-d);
+
+                                // -- op --
+                                //i++;
+                                ftoe.op=term[i];
+                        }
+                    }
+                    termOps.Add(ftoe);
+                    sign=string.Empty;
+                }
+            }
+        }
+        public decimal Evaluate(){ 
+            Fraction t1=new Fraction();
+            Fraction t2=new Fraction();
+            string sign ="";
+            int i=0;
+            //  -- brackets pass --
+            for(int t=0; t<termOps.Count;t++){
+                // -- sign --
+                if("-".Contains(termOps[t].term[0])){
+                    sign="-";
+                    i++;
+                }
+                if(termOps[t].term[i] == '('){
+                    //Remove brackets wrap
+            //Console.WriteLine("What brackets are here: "+termOps[t].term + "  " + +termOps[t].op);
+                    termOps[t].term=termOps[t].term.Substring(1+i,termOps[t].term.Length-(2+i));
+                    termOps[t].ParseToList();
+                    termOps[t].term = ""+sign+termOps[t].Evaluate().ToString();
+            //Console.WriteLine("Braced term evaluated="+termOps[t].term + "  op= " + termOps[t].op);
+                }
+                i=0;
+            }
+            //return 0m;
+            // -- ops pass --
+            while(termOps.Count>1){
+                //  -- div / mult pass --
+                for(i=0; i<termOps.Count && termOps.Count-i>1; i++){
+                    if(termOps[i].op=='/'){
+            //Console.WriteLine("/ What's here: "+termOps[i].term + "  " + +termOps[i].op);
+            //Console.WriteLine("/ What's also here: "+termOps[i+1].term + "  " + +termOps[i+1].op);
+                        t1=new Fraction(termOps[i].term);
+                        t2=new Fraction(termOps[i+1].term);
+                        termOps[i+1].term = (t1 / t2).ToString();
+            //Console.WriteLine("/ t1= " + t1 + ", t2= " + t2);
+            //Console.WriteLine("/  Now: "+termOps[i+1].term + "  " + +termOps[i+1].op);
+                        termOps.RemoveAt(i);
+                        i--;
+                    }else if(termOps[i].op=='*'){
+            //Console.WriteLine("* What's here: "+termOps[i].term + "  " + +termOps[i].op);
+            //Console.WriteLine("* What's also here: "+termOps[i+1].term + "  " + +termOps[i+1].op);
+                        t1=new Fraction(termOps[i].term);
+                        t2=new Fraction(termOps[i+1].term);
+                        termOps[i+1].term = (t1 * t2).ToString();
+            //Console.WriteLine("* t1= " + t1 + ", t2= " + t2);
+            //Console.WriteLine("* Now: "+termOps[i+1].term + "  " + +termOps[i+1].op);
+                        termOps.RemoveAt(i);
+                        i--;
+                    }
+                }     
+                //  -- minus / plus pass --
+                for(i=0; i<termOps.Count && termOps.Count-i>1; i++){
+                    if(termOps[i].op=='-'){
+            //Console.WriteLine("- What's here: "+termOps[i].term + "  " + +termOps[i].op);
+            //Console.WriteLine("- What's also here: "+termOps[i+1].term + "  " + +termOps[i+1].op);
+                        t1=new Fraction(termOps[i].term);
+                        t2=new Fraction(termOps[i+1].term);
+                        termOps[i+1].term = (t1 - t2).ToString();
+            //Console.WriteLine("- t1= " + t1 + ", t2= " + t2);
+            //Console.WriteLine("-  Now: "+termOps[i+1].term + "  " + +termOps[i+1].op);
+                        termOps.RemoveAt(i);
+                        i--;
+                    }else if(termOps[i].op=='+'){
+            //Console.WriteLine("+ What's here: "+termOps[i].term + "  " + +termOps[i].op);
+            //Console.WriteLine("+ What's also here: "+termOps[i+1].term + "  " + +termOps[i+1].op);
+                        t1=new Fraction(termOps[i].term);
+                        t2=new Fraction(termOps[i+1].term);
+                        //Console.WriteLine("minus plus " + termOps[i].term + " " +termOps[i].op);
+                        //Console.WriteLine("minus plus " + termOps[i+1].term + " " +termOps[i+1].op);
+                        termOps[i+1].term = (t1 + t2).ToString();
+            //Console.WriteLine("+ t1= " + t1 + ", t2= " + t2);
+            //Console.WriteLine("+ Now: "+termOps[i+1].term + "  " + +termOps[i+1].op);
+                        termOps.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
+            return new Fraction(termOps[0].term).ToDecimal();
+        }
+    }
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                                    public class GlowyReadout : FlowLayoutPanel{
+            public int led {
+                set{upBtn.led=value;
+                    downBtn.led=value;
+                    glowPanel.led=value; }
+            }
+            public GlowPanel glowPanel{ get; set; }
+            public GlowButton upBtn{get;set; } =new GlowButton(false,5);
+            public GlowButton downBtn=new GlowButton(true,5);
+
+            public GlowyReadout(EventHandler hndlGetSpeed){
+                this.Location=new Point(0,0);
+                this.Size=new Size(205,30);
+                this.ForeColor=Color.White;
+                //this.BackColor=Color.Maroon;
+                this.BackColor=Color.RoyalBlue;
+                upBtn.Text="+";
+                downBtn.Text="-";
+                upBtn.Height=25;
+                upBtn.Width=25;
+                downBtn.Height=25;
+                downBtn.Width=25;
+                downBtn.Location=new Point(200,0);
+                upBtn.ForeColor=Color.White;
+                downBtn.ForeColor=Color.White;
+
+                upBtn.Click+=(sender, e)=>btnClick(sender, e, 1);
+                downBtn.Click+=(sender, e)=>btnClick(sender, e, -1);
+                upBtn.Click+=hndlGetSpeed;
+                downBtn.Click+=hndlGetSpeed;
+
+                glowPanel=new GlowPanel();
+
+                this.Controls.Add(downBtn);
+                this.Controls.Add(glowPanel);
+                this.Controls.Add(upBtn);
+
+                upBtn.Enabled=false;
+                downBtn.Enabled=false;
+
+            }
+            private void btnClick(object sender, EventArgs e, int incr){
+                glowPanel.Select();
+                if(glowPanel.led+incr<=0){
+                    glowPanel.led=1;
+                    return;
+                }
+                if(glowPanel.led+incr>=11){
+                    glowPanel.led=10;
+                    return;
+                }
+                
+                glowPanel.led+=incr;
+                upBtn.led+=incr;
+                downBtn.led+=incr;
+                glowPanel.Invalidate();
+                upBtn.Invalidate();
+            }
+            public class GlowPanel : Panel{
+                public int led { get; set; }=5;
+                public GlowPanel(){
+                    this.Size=new Size(136,30);
+                }
+                protected override void OnPaint(PaintEventArgs e)  {
+                    base.OnPaint(e);
+                    Graphics g = e.Graphics;
+                    int x=0;
+                    Color glowColor = Color.Yellow;
+                    Pen glowPen=new Pen(glowColor);
+                    SolidBrush glowBrush = new SolidBrush(glowColor);
+                    Size glowLightSize =new Size(7,7);
+    
+                    int i=0;
+                    for(i=0;i<led;i++){
+                        g.FillRectangle(glowBrush, new Rectangle(new Point(x,10), glowLightSize));
+                        x+=14;
+                    }
+    
+                    glowBrush = new SolidBrush(Color.Indigo);
+                    while(i<10){
+                        g.FillRectangle(glowBrush, new Rectangle(new Point(x,10), glowLightSize));
+                        if( (i<10) && (i<=led+2) ){
+                            glowColor=Color.FromArgb(glowColor.A, (int)(glowColor.R*0.8),(int)(glowColor.G*0.8),(int)(glowColor.B*0.8));
+                            glowPen=new Pen(glowColor);
+                            g.DrawLine(glowPen, new Point(x+7,10), new Point(x+7,16));
+                            g.DrawLine(glowPen, new Point(x,16), new Point(x+7,16));
+                        }
+                        x+=14;
+                        i++;
+                    }
+                }
+            }
+        }    
+        public class GlowButton : Button{
+                bool left{ get; set; }
+                public int led{ get; set; }
+                public GlowButton(bool Left, int Led){
+                    left=Left;
+                    led=Led;
+                }
+                protected override void OnPaint(PaintEventArgs e)  {
+                    base.OnPaint(e);
+                    Graphics g = e.Graphics;
+                    int x = ClientSize.Width-1;
+                    int y = ClientSize.Height-5;
+                    Color glowColor = Color.Yellow;
+                    glowColor=Color.FromArgb(glowColor.A, (int)(glowColor.R*0.8),(int)(glowColor.G*0.8),(int)(glowColor.B*0.8));
+                    Pen glowPen=new Pen(glowColor);
+                    if(left){
+                        glowColor=Color.FromArgb(glowColor.A, (int)(glowColor.R*0.8),(int)(glowColor.G*0.8),(int)(glowColor.B*0.8));
+                        glowPen=new Pen(glowColor);
+                        g.DrawLine(glowPen, new Point(x,2), new Point(x,y));
+                        glowColor=Color.FromArgb(glowColor.A, (int)(glowColor.R*1.5),(int)(glowColor.G*1.5),(int)(glowColor.B*1.5));
+                        glowPen=new Pen(glowColor);
+                        g.DrawLine(glowPen, new Point(x,6), new Point(x,y-4));
+                        return;
+                    }else{
+                        if(led==10){
+                            glowColor=Color.FromArgb(glowColor.A, (int)(glowColor.R*0.8),(int)(glowColor.G*0.8),(int)(glowColor.B*0.8));
+                            glowPen=new Pen(glowColor);
+                            g.DrawLine(glowPen, new Point(1,2), new Point(1,y));
+
+                            glowColor=Color.Yellow;
+                            glowPen=new Pen(glowColor);
+                            g.DrawLine(glowPen, new Point(1,6), new Point(1,y-4));
+                        }
+                        if(led==9){
+                            glowColor=Color.FromArgb(glowColor.A, (int)(glowColor.R*0.8),(int)(glowColor.G*0.8),(int)(glowColor.B*0.8));
+                            glowPen=new Pen(glowColor);
+                            g.DrawLine(glowPen, new Point(1,4), new Point(1,y-2));
+                        }
+                    }
+                }
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+                   //Debug
+        public void look(string atSomething, int x=0, int y=50){
+            TextRenderer.DrawText(CreateGraphics(), atSomething, this.Font,new Rectangle(x,y,150,150), SystemColors.ControlText);
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+                    decimal s = (t.a.Length + t.b.Length + t.c.Length)*0.5m;
+            decimal area = 0m;
+            try{
+                area = 
+                    (decimal)Math.Sqrt((double)(s*(s-t.a.Length)
+                                                 *(s-t.b.Length)
+                                                 *(s-t.c.Length)));
+            }catch(Exception e){
+                Δ(
+                    $@"Error:{e.Message}" +
+                    $@"A: {degA}{"\n"}B: {degB}{"\n"}C: {degC}"+
+                    $@"sinA: {sinA}{"\n"}sinB: {sinB}{"\n"}sinC: {sinC}"+
+                    $@"s:{s}{"\n"}a: {t.a.Length}{"\n"}b: {t.b.Length}{"\n"}c: {t.c.Length}"
+                );  
+            }
+
+Δ($@"area: {area}"); //is in m^2
+
+
+
+
+
+
+
+
+
+
+
