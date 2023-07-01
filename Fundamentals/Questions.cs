@@ -412,10 +412,6 @@ namespace Polish {
             var sfnum = new qColumn();
             var sfden = new qColumn();
 
-            // BLOW CHUNKS -----------------
-            //sfnum.rowChunks.Add(new qChunk(0, 0, "some", true));
-            //sfden.rowChunks.Add(new qChunk(0, 0, "fraction", true));
-
             //new bits
             sfnum.nodeValue= "some";
             sfden.nodeValue= "fraction";
@@ -450,10 +446,6 @@ namespace Polish {
             var doubleWithExpDenom = new qColumn();
             var doubleWithExpNumExp = new qColumn();
 
-            // BLOW CHUNKS -----------------
-            //doubleWithExpNum.rowChunks.Add(new qChunk(0, 0, "double", true));
-            //doubleWithExpDenom.rowChunks.Add(new qChunk(0, 0, "h", true));
-
             //new bits
             doubleWithExpNum.nodeValue= "double";
             doubleWithExpDenom.nodeValue= "h";
@@ -475,8 +467,6 @@ namespace Polish {
             var singRow = new qColumn(); // S
             var singExp = new qColumn(); // sing
             singWithExp.rows.Add(singRow);
-            // BLOW CHUNKS -----------------
-            //singRow.rowChunks.Add(new qChunk(0, 0, "S", true));
 
             //new bits
             singRow.nodeValue= "S";
@@ -507,8 +497,6 @@ namespace Polish {
             var bigA = new qColumn();
             var bigARow = new qColumn();
             bigA.rows.Add(bigARow);
-            // BLOW CHUNKS -----------------
-            //bigARow.rowChunks.Add(new qChunk(0, 0, "A", true));
 
             //new bits
             bigARow.nodeValue = "A";
@@ -549,12 +537,6 @@ namespace Polish {
             frac.rows.Add(num);
             frac.rows.Add(den);
             frac.rows.Add(fenom);
-
-            // num, denom, fenom
-            // BLOW CHUNKS -----------------
-            //num.rowChunks.Add(new qChunk(0, 0, "AAAAAA", true));
-            //den.rowChunks.Add(new qChunk(0, 0, "b", true));
-            //fenom.rowChunks.Add(new qChunk(0, 0, "F", true));
 
             //new bits
             num.nodeValue="AAAAAA";
@@ -699,10 +681,6 @@ namespace Polish {
             var ar2 = new qColumn();
             var ar3 = new qColumn();
             var ar4 = new qColumn();
-            // BLOW CHUNKS -----------------
-            //ar1.rowChunks.Add(new qChunk(0, 0, "x", true));
-            //ar2.rowChunks.Add(new qChunk(0, 0, "y", true));
-            //ar3.rowChunks.Add(new qChunk(0, 0, "z", true));
 
             //new bits
             ar1.nodeValue = "x";
@@ -729,11 +707,6 @@ namespace Polish {
                 ar1 = new qColumn();
                 ar2 = new qColumn();
                 ar3 = new qColumn();
-            // BLOW CHUNKS -----------------
-            //ar1.rowChunks.Add(new qChunk(0, 0, "w", true));
-            //ar2.rowChunks.Add(new qChunk(0, 0, "x", true));
-            //ar3.rowChunks.Add(new qChunk(0, 0, "y", true));
-            //ar4.rowChunks.Add(new qChunk(0, 0, "z", true));
 
             //new bits
             ar1.nodeValue = "w";
@@ -785,11 +758,6 @@ namespace Polish {
                 ar2 = new qColumn();
                 ar3 = new qColumn();
                 ar4 = new qColumn();
-            // BLOW CHUNKS -----------------
-            //ar1.rowChunks.Add(new qChunk(0, 0, "w", true));
-            //ar2.rowChunks.Add(new qChunk(0, 0, "x", true));
-            //ar3.rowChunks.Add(new qChunk(0, 0, "y", true));
-            //ar4.rowChunks.Add(new qChunk(0, 0, "z", true));
 
             //new bits
             ar1.nodeValue="w";
@@ -818,10 +786,6 @@ namespace Polish {
             ar1 = new qColumn();
             ar2 = new qColumn();
             ar3 = new qColumn();
-            // BLOW CHUNKS -----------------
-            //ar1.rowChunks.Add(new qChunk(0, 0, "x", true));
-            //ar2.rowChunks.Add(new qChunk(0, 0, "y", true));
-            //ar3.rowChunks.Add(new qChunk(0, 0, "z", true));
 
             //new bits
             ar1.nodeValue="x";

@@ -196,33 +196,9 @@ namespace Polish {
 
             int dropCount = Regex.Match(decStrDec.ToString(), @"\d+$").Value.Length-mantissa.ToString().Length;//b2u
 
-            //.Value.Length   .Value.Length   .Value.Length   .Value.Length   .Value.Length   .Value.Length   
-            //.Value.Length   .Value.Length   .Value.Length   .Value.Length   .Value.Length   .Value.Length   
-            //.Value.Length   .Value.Length   .Value.Length   .Value.Length   .Value.Length   .Value.Length   
-            //.Value.Length   .Value.Length   .Value.Length   .Value.Length   .Value.Length   .Value.Length   
-            //.Value.Length   .Value.Length   .Value.Length   .Value.Length   .Value.Length   .Value.Length   
-            //.Value.Length   .Value.Length   .Value.Length   .Value.Length   .Value.Length   .Value.Length   
-            //.Value.Length   .Value.Length   .Value.Length   .Value.Length   .Value.Length   .Value.Length   
-            //.Value.Length   .Value.Length   .Value.Length   .Value.Length   .Value.Length   .Value.Length   
-            //.Value.Length   .Value.Length   .Value.Length   .Value.Length   .Value.Length   .Value.Length   
-            //.Value.Length   .Value.Length   .Value.Length   .Value.Length   .Value.Length   .Value.Length   
-            //(I am v. close to swearing)
-
             denominator=(long)Math.Pow(10, mantissa.ToString().Length+dropCount);
             numerator=characteristic*denominator+((characteristic<0 ? -1 : 1)*mantissa); //sign
             numerator*=sign;
-
-            //Console.WriteLine($@"dec:            {dec}");
-            //Console.WriteLine($@"strDec:         {strDec}");
-            //Console.WriteLine($@"decStrDec:      {decStrDec}");
-            //Console.WriteLine($@"characteristic: {characteristic}");
-            //Console.WriteLine($@"mantissa:       {mantissa}");
-            //Console.WriteLine($@"dropCount:      {dropCount}");
-            //Console.WriteLine($@"numerator:      {numerator}");
-            //Console.WriteLine($@"denominator:    {denominator}");
-            //Console.WriteLine($@"");
-            //Console.WriteLine($@"");
-            //Console.WriteLine($@"");
 
             if (r) {
                 FractionLite red = FractionUtils.Reduce(numerator, denominator);
@@ -326,31 +302,20 @@ namespace Polish {
                 shrunkOp2=Utils.Shrink(aDenominator, 10)*Utils.Shrink(bNumerator, 10);
             }//else type properly
 
-            //Console.WriteLine($@"shrunkOps@ {shrunkOp1}, {shrunkOp2}");
-
             decimal num = 1m;
             decimal denom = 1m;
 
             num=shrunkOp1;
             denom=shrunkOp2;
 
-            //Console.WriteLine($@"Before: {num}, {denom}");
-
             while (Math.Abs(num) < long.MaxValue-1000000 && Math.Abs(denom) < long.MaxValue-1000000) { //Abs
                                                                                                        //Console.WriteLine($@"During: {num}, {denom}");
                 num=Utils.Shrink(num, -1);
                 denom=Utils.Shrink(denom, -1);
             }
-            //Console.WriteLine($@"After: {num}, {denom}");
 
             num=Utils.Shrink(num, 2);
             denom=Utils.Shrink(denom, 2);
-            //Console.WriteLine($@"Really after: {num}, {denom}");
-            //Console.WriteLine($@"result = {num}/{denom}");
-            //Console.WriteLine($@"OK what does longing do? {(long)num},{(long)denom}");
-            //Console.WriteLine("OK barst...:" + new Fraction((long)num, (long)denom,false));
-
-            //SwearBox.Deposit(coins);
 
             return new Fraction((long)num, (long)denom);
         }
@@ -445,20 +410,6 @@ namespace Polish {
             }
             return new FractionLite(n*nSign, d*dSign);
         }
-        //public static FractionLite LameReduce(long n, long d){
-        //    int[] primes= Utils.Primes();
-        //    //int[] primes= Utils.Primes((n>d?n:d)/2);
-        //    for(int i=0; i< primes.Length; i++){
-        //        if(n-(n/primes[i])*primes[i]==0 ){
-        //            if(d-(d/primes[i])*primes[i]==0){
-        //                n/=primes[i];
-        //                d/=primes[i];
-        //                i=-1;
-        //            } 
-        //        }
-        //    }
-        //    return new FractionLite(n,d);
-        //}
 
     }
 
