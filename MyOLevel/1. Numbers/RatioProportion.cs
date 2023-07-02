@@ -10,7 +10,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             //askBuilder = new BitmapBuilder(200, 50);
 
@@ -40,7 +40,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             //askBuilder = new BitmapBuilder(200, 50);
 
@@ -71,7 +71,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             int pence = qb.RangeSampleInt(0)[0]*10;
             int pounds = qb.RangeSampleInt(0)[0];
@@ -111,7 +111,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             long num = qb.RangeSampleInt(0)[0];
             var tup = Utils.Fr(1, 2);
@@ -138,7 +138,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             // -- calculate --
             int num = qb.RangeSampleInt(0)[0];
@@ -169,7 +169,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
             var ansColumns = new List<qColumn>();
 
             qb.rangeInt=qb.RangeSampleInt(); //qParams.terms=4
@@ -207,7 +207,7 @@ namespace Polish.OLevel.Numbers {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
             var ansColumns = new List<qColumn>();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             string[] semanticStuff ={"articles", "ingredients", "items", "units", "parts", "components", "k", "kg", "litres", "fl. ounces", "hours",
                                      "minutes", "days", "metres", "yards", "Mwh", "packages", "samples", "packs", "crates", "pallets", "boxes", "trays" };
@@ -259,7 +259,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             flongy[] movers = new flongy[]{
                 new flongy( "time",   " hours",      "in",  1, new flingy( "hiker", "walks",  "km"), new flangy("hikers", "walk",  "km") ),
@@ -319,7 +319,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             int int1, int2;
             int[] intRange = qb.RangeSampleInt(0);
@@ -349,7 +349,7 @@ namespace Polish.OLevel.Numbers {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
             var askColumns = new List<qColumn>();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             FractionLite fl1 = new FractionLite(1, 1);
             FractionLite fl2 = new FractionLite(1, 1);

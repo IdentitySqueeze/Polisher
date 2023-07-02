@@ -118,7 +118,7 @@ namespace Polish {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             qb.rangeInt=qb.RangeSampleInt();
             int average = qb.rangeInt[0];
@@ -143,7 +143,7 @@ namespace Polish {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             thangy[] things = { new thangy("instrument reading", "mm"),
                                new thangy("weight of boxes in a container","kg"),
@@ -190,7 +190,7 @@ namespace Polish {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             // The average of {x} numbers is {a} and the average of {y} of them is {b}. What's the average of the remaining {x-y}?"
             qb.rangeInt = qb.RangeSampleInt();
@@ -225,7 +225,7 @@ namespace Polish {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             //"The average of {x} numbers is {a}. What would the average be if one number, {y}, was removed?"
             qb.rangeInt=qb.RangeSampleInt();
@@ -253,7 +253,7 @@ namespace Polish {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             // -- get fraction --
             qb.rangeInt=qb.RangeSampleInt(); //numberRange==1,10; terms==1
@@ -281,7 +281,7 @@ namespace Polish {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             // numberRange:  {1,3},{2,7},{2,4},{2,5} }
 
@@ -462,7 +462,7 @@ namespace Polish {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             decimal[] rangeDec = qb.RangeSampleDec();//numberRanges, terms, mantissa
             // -- calculate --
@@ -493,7 +493,7 @@ namespace Polish {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             decimal[] rangeDec = qb.RangeSampleDec();//numberRanges, terms, mantissa
 
@@ -532,7 +532,7 @@ namespace Polish {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
             var ansColumns = new List<qColumn>();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             qb.rangeInt=qb.RangeSampleInt(); //qParams.terms=4
             int distriband = qb.RangeSampleInt(0)[0];
@@ -613,7 +613,7 @@ namespace Polish {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             qb.rangeInt=qb.RangeSampleInt();
             // -- calculate --
@@ -667,7 +667,7 @@ namespace Polish {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             double _base = Utils.R(2, 20);
             double power = Utils.R(2, 3);
@@ -691,7 +691,7 @@ namespace Polish {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             //TODO Consolidate into one question
             //     Shrinky-growy the number of terms
@@ -733,7 +733,7 @@ namespace Polish {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             double _base1 = Utils.R(2, 5);
             double power1 = Utils.R(2, 5);
@@ -763,7 +763,7 @@ namespace Polish {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             //TODO: signs
             int x = Utils.NotSq(2, 5);

@@ -38,7 +38,7 @@ namespace Polish.OLevel.Numbers {
                     answers.Add(f);      //       add
             answers.Add(number); // add 81 //ignore 1?
 
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
             for (int i = 0; i<answers.Count-1; i++) {
                 possAnswer.answer.Add(qb.ToSingleInteger($@"{answers[i]}"));
                 possAnswer.answer.Add(qb.CommaColumn());
@@ -66,7 +66,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             List<int> primes = new List<int>();
             List<int> answers = new List<int>();
@@ -117,7 +117,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
             // -- generate --
             int[] srcs = new int[qParams.terms];
             //TODO: Allow failures (HCF==1)

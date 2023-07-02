@@ -10,7 +10,7 @@ namespace Polish.OLevel.Numbers {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
             var ansColumns = new List<qColumn>();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             //askBuilder = new BitmapBuilder(200, 50);
 
@@ -49,7 +49,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             //askBuilder = new BitmapBuilder(200, 50);
 
@@ -85,7 +85,7 @@ namespace Polish.OLevel.Numbers {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
             var ansColumns = new List<qColumn>();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             qb.rangeInt=qb.RangeSampleInt();
             decimal num = 0m;
@@ -119,7 +119,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             qb.rangeInt=qb.RangeSampleInt();
             decimal ans = 0m;
@@ -156,7 +156,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             decimal num = qb.RangeSampleInt(0)[0]*Utils.R(1, 10);
             decimal percent = qb.RangeSampleInt(0)[0];
@@ -183,7 +183,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             decimal percent = qb.RangeSampleInt(0)[0]*Utils.R(1, 10);
             decimal rslt = Utils.R(1, 20)*Utils.R(1, 4);
@@ -211,7 +211,7 @@ namespace Polish.OLevel.Numbers {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
             var ansColumns = new List<qColumn>();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             decimal num = qb.RangeSampleInt(0)[0]*Utils.R(1, 5);
             decimal rslt = Utils.R(1, 20)*20;
@@ -242,7 +242,7 @@ namespace Polish.OLevel.Numbers {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
             var ansColumns = new List<qColumn>();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             decimal buys = qb.RangeSampleInt(0)[0];
             decimal sells = qb.RangeSampleInt(0)[0];
@@ -281,7 +281,7 @@ namespace Polish.OLevel.Numbers {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
             var ansColumns = new List<qColumn>();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             decimal price = qb.RangeSampleInt(0)[0]*Utils.R(5, 50);
             decimal discount = qb.RangeSampleInt(0)[0]+5;
@@ -316,7 +316,7 @@ namespace Polish.OLevel.Numbers {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
             var ansColumns = new List<qColumn>();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             decimal sellPrice = qb.RangeSampleInt(0)[0]*Utils.R(1, 50);
             decimal pl = qb.RangeSampleInt(0)[0]*(qb.Maybe(1, 0)==1 ? -1 : 1);
@@ -353,7 +353,7 @@ namespace Polish.OLevel.Numbers {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
             var ansColumns = new List<qColumn>();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             decimal costPrice = qb.RangeSampleInt(0)[0];
             decimal pl = qb.RangeSampleInt(0)[0]*(qb.Maybe(1, 0)==1 ? -1 : 1);
@@ -390,7 +390,7 @@ namespace Polish.OLevel.Numbers {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
             var ansColumns = new List<qColumn>();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             decimal sellPrice = qb.RangeSampleInt(0)[0];
             decimal costPrice = qb.RangeSampleInt(0)[0];
@@ -432,7 +432,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
             var amount = 0;
             //$@"You invest £{amount} at {percent}% simple interest per annum.";
             //$@"How much interest would you earn in {years} years?";
@@ -451,7 +451,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             Hints = "start * (1 + percent / 100 ) ^ years";
 

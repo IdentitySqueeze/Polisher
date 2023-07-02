@@ -57,7 +57,7 @@ namespace Polish {
     {
         //Ctor
         public Question(int id, qParameters qparams) => qParams = qparams;  
-        public List<possibleAnswer> possibleAnswers { get; set; } = new List<possibleAnswer> { };
+        public List<possibleAnswer<qColumn>> possibleAnswers { get; set; } = new List<possibleAnswer<qColumn>> { };
         //public List<qChunk> botText { get; set; } = new List<qChunk>(); 
         public string topText { get; set; }=string.Empty;
         public string Hints {get; set;}="Be more happy.";
@@ -220,12 +220,12 @@ namespace Polish {
             return rtn;
         }
         public void possibleAnswerFromColumns(Question q, List<qColumn> cols) {
-            possibleAnswer possAnswer = new possibleAnswer { }; // I'm ( one ) answer...
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>(); // I'm ( one ) answer...
             possAnswer.answer.AddRange(cols);
             q.possibleAnswers.Add(possAnswer);
         }
         public void possibleAnswerFromColumn(Question q, qColumn col) {
-            possibleAnswer possAnswer = new possibleAnswer { }; // I'm ( one ) answer...
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>(); // I'm ( one ) answer...
             possAnswer.answer.Add(col);
             q.possibleAnswers.Add(possAnswer);
         }
@@ -312,7 +312,7 @@ namespace Polish {
             genus = Genus.NewStructure;
             askBuilder.genus= Genus.NewStructure;
 
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             int i = 0, j = 0, k = 0;
 
@@ -362,7 +362,7 @@ namespace Polish {
             }
             
             // -- arrange answer in sequence order --
-            possAnswer = new possibleAnswer();
+            possAnswer = new possibleAnswer<qColumn>();
             for (i=0; i<seq.Count()-1; i++) {
                 possAnswer.answer.Add(qb.ToBracketColumn(fTerms[i]));
                 possAnswer.answer.Add(qb.CommaColumn());
@@ -381,7 +381,9 @@ namespace Polish {
             //askBuilder.OldAddTextLine(topText, qb.alphaFont, new Point(0, 0));
             askBuilder.AddTextDraw(topText, qb.alphaFont, new Point(0, 0));
 
-            askBuilder.AddColumns(shuffled, new Point(10, 40));
+            qColumn node = new qColumn();
+            node.columns.AddRange(shuffled);
+            askBuilder.AddColumnAsNode(node, new Point(10, 40));
 
             askBitmap=askBuilder.Commit();
         }
@@ -395,7 +397,7 @@ namespace Polish {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             // -- ask
             //askBuilder.AddTextDraw($@"What is da fing?", qb.alphaFont, new Point(0, 0));
@@ -642,7 +644,7 @@ namespace Polish {
     //public override void GenerateQuestion() {
     //    var qb = new QuestionBuilder(qParams, queFont);
     //    var askBuilder = new BitmapBuilder();
-    //    possibleAnswer possAnswer = new possibleAnswer();
+    //    possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
     //
     //    // -- ask
     //    askBuilder.AddTextDraw($@"", qb.alphaFont, new Point(0, 0));
@@ -662,7 +664,7 @@ namespace Polish {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder( qParams, queFont );
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
 
             //var fr1 = qb.ToColumnFraction("a", "b", true, true, true);

@@ -10,7 +10,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             var askColumns = new List<qColumn>();
             // -- get fraction --
@@ -41,7 +41,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             var queColumns = new List<qColumn>();
             // -- get fraction --
@@ -99,7 +99,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             //askBuilder = new BitmapBuilder(270, 80);
             var ansColumns = new List<qColumn>();
@@ -140,7 +140,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             int i = 0, j = 0, k = 0;
 
@@ -190,7 +190,7 @@ namespace Polish.OLevel.Numbers {
             }
 
             // -- arrange answer in sequence order --
-            possAnswer = new possibleAnswer();
+            possAnswer = new possibleAnswer<qColumn>();
             for (i=0; i<seq.Count()-1; i++) {
                 possAnswer.answer.Add(qb.ToColumnFraction(fTerms[i]));
                 possAnswer.answer.Add(qb.CommaColumn());
@@ -217,7 +217,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
 
             //askBuilder = new BitmapBuilder(qParams.terms*55, 50);
@@ -278,7 +278,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             //askBuilder = new BitmapBuilder(qParams.terms*55, 50);
             // numberRange:  {1,3},{2,7},{2,4},{2,5} }
@@ -327,7 +327,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             //askBuilder = new BitmapBuilder(qParams.terms*55, 50);
             // numberRange:  {1,3},{2,7},{2,4},{2,5} }
@@ -377,7 +377,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             // numberRange:  {1,3},{2,7},{2,4},{2,5} }
             // -- generate --
@@ -419,7 +419,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             // -- int --
             qb.rangeInt=qb.RangeSampleInt();

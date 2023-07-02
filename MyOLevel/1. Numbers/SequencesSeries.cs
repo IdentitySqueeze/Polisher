@@ -11,7 +11,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             // -- ask
             var s = qb.Sigma(21,5000);
@@ -38,7 +38,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             var a = Utils.R(1, 10)-5;
             var d = Utils.R(1, 5);
@@ -71,7 +71,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
             var askColumns = new List<qColumn>{ };
 
             var a = Utils.R(1, 10);
@@ -115,7 +115,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             var a = Utils.R(1, 10)-5;
             var d = Utils.R(1, 5);
@@ -155,7 +155,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             var a = Utils.R(1, 10)-5;
             var d = Utils.R(1, 5);
@@ -196,7 +196,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             var a = Utils.R(1, 10)-5;
             var d = Utils.R(1, 5);
@@ -230,7 +230,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             decimal a = Utils.R(2, 45)-10;
             decimal end = a + Utils.R(20, 100);
@@ -274,7 +274,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             decimal a = Utils.R(1, 50)-10;
             decimal d = Utils.R(1, 20)*(qb.Maybe()?1:-1);
@@ -326,7 +326,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             decimal a = Utils.R(1, 50)-10;
             decimal d = Utils.R(3, 20);
@@ -382,7 +382,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             decimal a = Utils.R(1, 50)-10;
             decimal d = Utils.R(3, 20);
@@ -436,7 +436,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             decimal a = Utils.R(5, 50);
             decimal d = Utils.R(3, 20);
@@ -487,7 +487,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
             var askColumns = new List<qColumn> { };
 
             var a = Utils.R(1, 50);
@@ -527,7 +527,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             var a = Utils.R(5, 10);
             var r = Utils.R(2, 5);
@@ -560,7 +560,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             var a = Utils.R(2, 5);
             var r = Utils.R(2, 5);
@@ -600,7 +600,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             var a = Utils.R(1, 5);
             var r = Utils.R(2, 6);
@@ -644,7 +644,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             var a = Utils.R(1, 5);
             var r = Utils.R(2, 6);
@@ -681,7 +681,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             decimal a = Utils.R(1, 5);
             decimal r = Utils.R(11, 50)/10m;
@@ -725,7 +725,7 @@ namespace Polish.OLevel.Numbers {
         public override void GenerateQuestion() {
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
-            possibleAnswer possAnswer = new possibleAnswer();
+            possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
 
             decimal a = Utils.R(1, 5);
             decimal r = Utils.R(2, 6);

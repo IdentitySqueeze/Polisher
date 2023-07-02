@@ -144,6 +144,53 @@ namespace Polish {
             ansList.Add(ans);
             AddColumns(ansList, p);
         }
+        public void AddColumnAsNode(qColumn ansNode, Point p, bool uniformSize = false) {
+            //These have Point()'s threaded into them, the front end doesn't
+
+            #region -- measureWalker
+            var measureFactory = new Treebeard<qColumn, qColumn>.MeasureFactory<qColumn, MeasureArgsRtns>();
+            measureWalker = (ITreeWalker<qColumn, MeasureArgsRtns>)measureFactory.GetWalker(genus);
+            measureRtn = new MeasureArgsRtns();
+            measureFactory.GetWalkerOps(genus, measureWalker);
+            measureRtn.Height = letterHeight;
+            measureRtn = measureWalker.Traverse(ansNode, measureRtn); //<-- assigns rowLens
+            #endregion
+
+            #region -- sizeWalker
+            var layoutFactory = new Treebeard<qColumn, qColumn>.LayoutFactory<qColumn, SizeArgsRtns>();
+            layoutWalker =  (ITreeWalker<qColumn, SizeArgsRtns>)layoutFactory.GetWalker(genus);
+            layoutFactory.GetWalkerOps(genus, layoutWalker);
+            sizeRtn = new SizeArgsRtns {
+                Height = measureRtn.Height, // PROVISIONAL
+                maxRootDepth = measureRtn.maxRootDepth,
+                TopLeft=p,
+            };
+            if (uniformSize) {
+                sizeRtn.uniformSize = uniformSize;
+                sizeRtn.uniformedWidth = 50;// ansList.Max(ansCol => ansCol.rows.Max(ansRow => ansRow.rowLen)); // PROVISIONAL
+            }
+            sizeRtn = layoutWalker.Traverse(ansNode, sizeRtn); //<-- creates rowRects, does cum width & uniforming
+                                                               //<-- rowRects not used as absolute positions: modified with TopLeft offsets in draw
+            #endregion
+
+            #region -- drawWalker
+            var drawFactory = new Treebeard<qColumn, qColumn>.DrawFactory<qColumn, DrawArgsRtns>();
+            drawWalker = (ITreeWalker<qColumn, DrawArgsRtns>)drawFactory.GetWalker(genus);
+            drawRtn = new DrawArgsRtns {
+                Selected = false,
+                Width = sizeRtn.Width,    // cum?
+                Height = sizeRtn.Height,  // ?
+                maxRootDepth=sizeRtn.maxRootDepth
+            };
+            //drawWalker.PreColumnOp = DrawPreColumnOp;
+            drawWalker.RowOp = DrawProcessRowsGraphicsUtils;
+            //drawWalker.PostColumnOp = DrawPostColumnOp;
+            drawRtn.ansBackBuffer = g;
+            drawRtn = drawWalker.Traverse(ansNode, drawRtn);
+            #endregion
+            // Draw    : Don't calculate, just draw
+        }
+
         public void AddColumns(List<qColumn> ansList, Point p, bool uniformSize = false) {
             //These have Point()'s threaded into them, the front end doesn't
 
@@ -164,8 +211,7 @@ namespace Polish {
             //measureWalker.PreColumnOp = MeasurePreColumn;
             //measureWalker.PostColumnOp =MeasurePostColumn;
             measureRtn.Height = letterHeight;
-            measureRtn = measureWalker.Traverse(ansList, measureRtn); //<-- glues together answerRowChunks into wholeRow field
-                                                                      //<-- updates answerColumns' rowLens
+            measureRtn = measureWalker.Traverse(ansList, measureRtn); //<-- assigns rowLens
             #endregion
             // Measure : Widths, Heights, stringLengths, rowLengths, letterHeights
 
@@ -378,18 +424,6 @@ namespace Polish {
             return rtn;
         }
         #endregion
-
-        //--------------------------------------------------------------------
-        // rowLen includes spacing        (Should only apply to wholeRows?)
-        //                                (Could measure inner rowLens? rowRects?)
-        //                                (Should never grow?)
-        // rowRect shouldn't              (Should apply to any qColumn?)
-        //                                (Could measure inner rowRects? rowLens?)
-        //                                (Can grow?)
-        // rtn.Width should be cumulative (Every walker type?)
-        //                                (Some are traversal specific)
-        //                                (Some are reused in every column)
-        //--------------------------------------------------------------------
 
         #region -- size stuff
         public SizeArgsRtns SizePreTraversalOp(List<qColumn> acs, SizeArgsRtns rtn) {

@@ -37,8 +37,9 @@ namespace Polish {
     // 
     //
     #endregion
-    public class possibleAnswer {
-        public List<qColumn> answer { get; set; } = new List<qColumn> { };
+    public class possibleAnswer<TNode> : IPossibleAnswer<TNode> {
+        public List<TNode> answer { get; set; } = new List<TNode> { };
+        public TNode answerNode { get; set; }
         public bool IsSequence { get; set; } = false;
         public bool uniformSize { get; set; } = false;
     }
@@ -97,7 +98,7 @@ namespace Polish {
         //public bool IsColumn => (colType!=ColTyp.exponent) && (rows.Count==0 )|| 
         //                        (colType==ColTyp.bracket && rows.Count==1);
         public bool IsColumn => (rows.Count==0 );
-        public bool IsLeaf => (columns.Count==0) && (colType & (ColTyp.bracket | ColTyp.rooted))==0;
+        public bool IsLeaf => (columns.Count==0);//&& (colType & (ColTyp.bracket | ColTyp.rooted))==0;
         public bool decorated => (colType & (ColTyp.bracket | ColTyp.rooted))>0;
         public bool InSequence { get; set; }
         public char? op { get; set; }

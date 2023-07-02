@@ -6,7 +6,7 @@ namespace Polish {
     public interface IQuestionFactory { }
     public interface IQuestion
     {
-        List<possibleAnswer> possibleAnswers { get; set; } 
+        List<possibleAnswer<qColumn>> possibleAnswers { get; set; } 
         string topText { get; set; }
         //List<qChunk> botText { get; set; }
         qParameters qParams { get; set; }
