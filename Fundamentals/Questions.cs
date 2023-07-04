@@ -313,6 +313,7 @@ namespace Polish {
             askBuilder.genus= Genus.NewStructure;
 
             possibleAnswer<qColumn> possAnswer = new possibleAnswer<qColumn>();
+            List<qColumn> answerColumns = new List<qColumn>();
 
             int i = 0, j = 0, k = 0;
 
@@ -364,15 +365,21 @@ namespace Polish {
             // -- arrange answer in sequence order --
             possAnswer = new possibleAnswer<qColumn>();
             for (i=0; i<seq.Count()-1; i++) {
-                possAnswer.answer.Add(qb.ToBracketColumn(fTerms[i]));
-                possAnswer.answer.Add(qb.CommaColumn());
+                //possAnswer.answer.Add(qb.ToBracketColumn(fTerms[i]));
+                //possAnswer.answer.Add(qb.CommaColumn());
+                answerColumns.Add(qb.ToBracketColumn(fTerms[i]));
+                answerColumns.Add(qb.CommaColumn());                
             }
-            possAnswer.answer.Add(qb.ToBracketColumn(fTerms[seq.Count()-1]));
+            //possAnswer.answer.Add(qb.ToBracketColumn(fTerms[seq.Count()-1]));
+            answerColumns.Add(qb.ToBracketColumn(fTerms[seq.Count()-1]));
 
             topText = $@"Arrange low to high:{qb.br()}";
             topText = topText.Substring(0, topText.Length);
 
-
+            //Add answer column
+            qColumn answerNode = new qColumn();
+            answerNode.columns.AddRange(answerColumns);
+            possAnswer.answerNode = answerNode;
             possAnswer.IsSequence = true;
             possAnswer.uniformSize = true;
             possibleAnswers.Add(possAnswer);
@@ -381,9 +388,10 @@ namespace Polish {
             //askBuilder.OldAddTextLine(topText, qb.alphaFont, new Point(0, 0));
             askBuilder.AddTextDraw(topText, qb.alphaFont, new Point(0, 0));
 
-            qColumn node = new qColumn();
-            node.columns.AddRange(shuffled);
-            askBuilder.AddColumnAsNode(node, new Point(10, 40));
+            // Add ask column
+            qColumn askNode = new qColumn();
+            askNode.columns.AddRange(shuffled);
+            askBuilder.AddColumnAsNode(askNode, new Point(10, 40));
 
             askBitmap=askBuilder.Commit();
         }
