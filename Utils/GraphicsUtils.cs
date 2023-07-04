@@ -167,7 +167,7 @@ namespace Polish {
             };
             if (uniformSize) {
                 sizeRtn.uniformSize = uniformSize;
-                sizeRtn.uniformedWidth = 50;// ansList.Max(ansCol => ansCol.rows.Max(ansRow => ansRow.rowLen)); // PROVISIONAL
+                sizeRtn.uniformedWidth = 30;// ansList.Max(ansCol => ansCol.rows.Max(ansRow => ansRow.rowLen)); // PROVISIONAL
             }
             sizeRtn = layoutWalker.Traverse(ansNode, sizeRtn); //<-- creates rowRects, does cum width & uniforming
                                                                //<-- rowRects not used as absolute positions: modified with TopLeft offsets in draw
