@@ -161,13 +161,13 @@ namespace Polish {
             layoutWalker =  (ITreeWalker<qColumn, SizeArgsRtns>)layoutFactory.GetWalker(genus);
             layoutFactory.GetWalkerOps(genus, layoutWalker);
             sizeRtn = new SizeArgsRtns {
-                Height = measureRtn.Height, // PROVISIONAL
+                Height = measureRtn.Height, 
                 maxRootDepth = measureRtn.maxRootDepth,
                 TopLeft=p,
             };
             if (uniformSize) {
-                sizeRtn.uniformSize = uniformSize;
-                sizeRtn.uniformedWidth = 30;// ansList.Max(ansCol => ansCol.rows.Max(ansRow => ansRow.rowLen)); // PROVISIONAL
+                //sizeRtn.uniformSize = true;// uniformSize;
+                //sizeRtn.uniformedWidth = 30;// ansList.Max(ansCol => ansCol.rows.Max(ansRow => ansRow.rowLen)); // PROVISIONAL
             }
             sizeRtn = layoutWalker.Traverse(ansNode, sizeRtn); //<-- creates rowRects, does cum width & uniforming
                                                                //<-- rowRects not used as absolute positions: modified with TopLeft offsets in draw
@@ -178,13 +178,15 @@ namespace Polish {
             drawWalker = (ITreeWalker<qColumn, DrawArgsRtns>)drawFactory.GetWalker(genus);
             drawRtn = new DrawArgsRtns {
                 Selected = false,
-                Width = sizeRtn.Width,    // cum?
-                Height = sizeRtn.Height,  // ?
+                Width = sizeRtn.xIncrement,
+                Height = sizeRtn.Height,
                 maxRootDepth=sizeRtn.maxRootDepth
             };
             //drawWalker.PreColumnOp = DrawPreColumnOp;
-            drawWalker.RowOp = DrawProcessRowsGraphicsUtils;
+            drawWalker.PreRowOp= NewDrawProcessRowsGraphicsUtils;
             //drawWalker.PostColumnOp = DrawPostColumnOp;
+            //drawFactory.GetWalkerOps(genus, drawWalker);
+
             drawRtn.ansBackBuffer = g;
             drawRtn = drawWalker.Traverse(ansNode, drawRtn);
             #endregion
@@ -233,8 +235,8 @@ namespace Polish {
                 TopLeft=p,
             };
             if (uniformSize) {
-                sizeRtn.uniformSize = uniformSize;
-                sizeRtn.uniformedWidth = 50;// ansList.Max(ansCol => ansCol.rows.Max(ansRow => ansRow.rowLen)); // PROVISIONAL
+                //sizeRtn.uniformSize = uniformSize;
+                //sizeRtn.uniformedWidth = 50;// ansList.Max(ansCol => ansCol.rows.Max(ansRow => ansRow.rowLen)); // PROVISIONAL
             }
             sizeRtn = layoutWalker.Traverse(ansList, sizeRtn); //<-- creates answerColumns' rowRects, does cum width & any ex post uniforming
                                                                //<-- and is going to have to create bracket columns' rowRects
@@ -252,7 +254,8 @@ namespace Polish {
 
             drawRtn = new DrawArgsRtns {
                 Selected = false,
-                Width = sizeRtn.Width,    // cum?
+                //Width = sizeRtn.Width,    // cum?
+                Width = sizeRtn.xIncrement,
                 Height = sizeRtn.Height,  // ?
                 maxRootDepth=sizeRtn.maxRootDepth
             };
@@ -657,59 +660,121 @@ namespace Polish {
         #endregion
 
         #region -- draw stuff
-        public DrawArgsRtns DrawProcessRowsGraphicsUtils(qColumn qc, DrawArgsRtns rtn) {
-            int midY = 0;
-            Pen bracketPen = new Pen(Color.Black, 2);
-            //if (qc.colType!=ColTyp.bracket) {
-            if (rtn.exponent) {
-                //---------------------------------
-                // Am I processing an exponent now?
-                //---------------------------------
-                for (int i = 0; i<qc.rows.Count; i++) {  //Multi-rows
-                    //AddTextDraw(qc.rows[i].wholeRow, ExponentFont, new Point(qc.rows[i].rowRect.X, qc.rows[i].rowRect.Y));
+        public DrawArgsRtns NewDrawProcessRowsGraphicsUtils(qColumn qc, DrawArgsRtns rtn) {
+            if (qc.nodeValue != null) { //Not all rows have nodeValues
 
-                    //new bits
-                    AddTextDraw(qc.rows[i].nodeValue, ExponentFont, new Point(qc.rows[i].rowRect.X, qc.rows[i].rowRect.Y));
-                }
-            } else {
-                //------------
-                // Normal size
-                //------------
-                if ((qc.colType & (ColTyp.bracket))>0) {
-                    var minX = qc.rows.Min(row => row.rowRect.X);
-                    var minY = qc.rows.Min(row => row.rowRect.Y);
-                    var bracketHeight = qc.rows.Sum(row => row.rowRect.Height);
-                    var bracketWidth = qc.rows.Sum(row => row.rowRect.Width);
-                    //rtn.ansBackBuffer.DrawLine(bracketPen,
-                    //    new Point(minX-8, minY),
-                    //    new Point(minX-8, minY + height));
+                int midY = 0;
+                Pen bracketPen = new Pen(Color.Black, 2);
+                if (rtn.exponent) {
+                    //---------------------------------
+                    // Am I processing an exponent now?
+                    //---------------------------------
+                    for (int i = 0; i<qc.rows.Count; i++) {  //Multi-rows
+                                                             //AddTextDraw(qc.rows[i].wholeRow, ExponentFont, new Point(qc.rows[i].rowRect.X, qc.rows[i].rowRect.Y));
 
-                    //rtn.ansBackBuffer.DrawLine(bracketPen,
-                    //    new Point(minX + rtn.Width+8, minY),
-                    //    new Point(minX + rtn.Width+8, minY + height));
-                    AddLineDraw(Pens.Black,
-                        new Point(minX-8, minY),
-                        new Point(minX-8, minY + bracketHeight));
-                    AddLineDraw(Pens.Black,
-                        new Point(minX + bracketWidth+8, minY),
-                        new Point(minX + bracketWidth+8, minY + bracketHeight));
+                        //new bits
+                        AddTextDraw(qc.rows[i].nodeValue, ExponentFont, new Point(qc.rows[i].rowRect.X, qc.rows[i].rowRect.Y));
+                    }
+                } else {
+                    //------------
+                    // Normal size
+                    //------------
+                    if ((qc.colType & (ColTyp.bracket))>0) {
+                        var minX = qc.rows.Min(row => row.rowRect.X);
+                        var minY = qc.rows.Min(row => row.rowRect.Y);
+                        var bracketHeight = qc.rows.Sum(row => row.rowRect.Height);
+                        var bracketWidth = qc.rows.Sum(row => row.rowRect.Width);
+                        AddLineDraw(Pens.Black,
+                            new Point(minX-8, minY),
+                            new Point(minX-8, minY + bracketHeight));
+                        AddLineDraw(Pens.Black,
+                            new Point(minX + bracketWidth+8, minY),
+                            new Point(minX + bracketWidth+8, minY + bracketHeight));
+                    }
+
+                    AddTextDraw(qc.nodeValue, ConsolasFont, new Point(qc.rowRect.X, qc.rowRect.Y));
                 }
 
-                for (int i = 0; i<qc.rows.Count; i++) {  //Multi-rows
-                                                         //var row = qc.rows[i];
-                                                         //if (row.colType==ColTyp.bracket) {
-                                                         //// Brackets around num/denom/row. Which means I'm a COLUMN around the row.
-                                                         //    rtn = DrawPreColumnOp(row, rtn);
-                                                         //    rtn = DrawProcessRows(row.rows[0], rtn);
-                                                         //    rtn = DrawPostColumnOp(row, rtn);
-                                                         //    return rtn;
-                                                         //} else {
+                // -- division line --
+                if (qc.showDiv && (qc.colType & (ColTyp.fraction))>0) {
+                    //int xStart = qc.rowRect.X;
+                    int xStart = qc.parent.rows.Min(r => r.rowRect.X);
+                    //int xEnd = (xStart + qc.rowLen)-5;
+                    int xEnd = xStart + qc.parent.rows.Max(r => r.rowLen)-5;
+                    midY = (qc.rowRect.Y+ qc.rowRect.Height) +5;
 
+                    //// We have exponents ----------------------------
+                    //if ((qc.rows[0].columns.Count==1 && qc.rows[0].columns[0].colType==ColTyp.exponent) ||
+                    //     (qc.rows[1].columns.Count==1 && qc.rows[1].columns[0].colType==ColTyp.exponent) ||
+                    //      qc.colType == ColTyp.exponent) {
+                    //    midY-=2;
+                    //    var midX = xStart+(xEnd-xStart)/2;
+                    //    var x0 = midX + qc.rows[0].rowRect.Width/2 + qc.rows[0].rowExpLen; // bothBasesMid + (halfMyBase plus exp)
+                    //    var x1 = midX + qc.rows[1].rowRect.Width/2 + qc.rows[1].rowExpLen; // bothBasesMid + (halfMyBase plus exp)
+                    //    xEnd = Math.Max(x0, x1); //Extends div line under exp
                     //}
-                    //AddTextDraw(qc.rows[i].wholeRow, ConsolasFont, new Point(qc.rows[i].rowRect.X, qc.rows[i].rowRect.Y));
-                    //if (qc.rows[i].colType==ColTyp.bracket) {
-                    //    rtn = drawWalker.Traverse(qc.columns, rtn, rtn.depth);
-                    //} else {
+
+                    AddLineDraw(Pens.Black, new Point(xStart, midY),
+                                            new Point(xEnd, midY));
+                }
+            }
+            return rtn;
+        }
+        public DrawArgsRtns DrawProcessRowsGraphicsUtils(qColumn qc, DrawArgsRtns rtn) {
+            //if (qc.nodeValue != null) { //Not all rows have nodeValues
+
+                int midY = 0;
+                Pen bracketPen = new Pen(Color.Black, 2);
+                //if (qc.colType!=ColTyp.bracket) {
+                if (rtn.exponent) {
+                    //---------------------------------
+                    // Am I processing an exponent now?
+                    //---------------------------------
+                    for (int i = 0; i<qc.rows.Count; i++) {  //Multi-rows
+                                                             //AddTextDraw(qc.rows[i].wholeRow, ExponentFont, new Point(qc.rows[i].rowRect.X, qc.rows[i].rowRect.Y));
+
+                        //new bits
+                        AddTextDraw(qc.rows[i].nodeValue, ExponentFont, new Point(qc.rows[i].rowRect.X, qc.rows[i].rowRect.Y));
+                    }
+                } else {
+                    //------------
+                    // Normal size
+                    //------------
+                    if ((qc.colType & (ColTyp.bracket))>0) {
+                        var minX = qc.rows.Min(row => row.rowRect.X);
+                        var minY = qc.rows.Min(row => row.rowRect.Y);
+                        var bracketHeight = qc.rows.Sum(row => row.rowRect.Height);
+                        var bracketWidth = qc.rows.Sum(row => row.rowRect.Width);
+                        //rtn.ansBackBuffer.DrawLine(bracketPen,
+                        //    new Point(minX-8, minY),
+                        //    new Point(minX-8, minY + height));
+
+                        //rtn.ansBackBuffer.DrawLine(bracketPen,
+                        //    new Point(minX + rtn.Width+8, minY),
+                        //    new Point(minX + rtn.Width+8, minY + height));
+                        AddLineDraw(Pens.Black,
+                            new Point(minX-8, minY),
+                            new Point(minX-8, minY + bracketHeight));
+                        AddLineDraw(Pens.Black,
+                            new Point(minX + bracketWidth+8, minY),
+                            new Point(minX + bracketWidth+8, minY + bracketHeight));
+                    }
+
+                    for (int i = 0; i<qc.rows.Count; i++) {  //Multi-rows
+                                                             //var row = qc.rows[i];
+                                                             //if (row.colType==ColTyp.bracket) {
+                                                             //// Brackets around num/denom/row. Which means I'm a COLUMN around the row.
+                                                             //    rtn = DrawPreColumnOp(row, rtn);
+                                                             //    rtn = DrawProcessRows(row.rows[0], rtn);
+                                                             //    rtn = DrawPostColumnOp(row, rtn);
+                                                             //    return rtn;
+                                                             //} else {
+
+                        //}
+                        //AddTextDraw(qc.rows[i].wholeRow, ConsolasFont, new Point(qc.rows[i].rowRect.X, qc.rows[i].rowRect.Y));
+                        //if (qc.rows[i].colType==ColTyp.bracket) {
+                        //    rtn = drawWalker.Traverse(qc.columns, rtn, rtn.depth);
+                        //} else {
                         //new bit
                         AddTextDraw(qc.rows[i].nodeValue, ConsolasFont, new Point(qc.rows[i].rowRect.X, qc.rows[i].rowRect.Y));
 
@@ -722,40 +787,41 @@ namespace Polish {
                             rtn = drawWalker.Traverse(qc.rows[i].columns[0].columns, rtn, rtn.depth);
                             rtn.exponent = false;
                         }
+                        //}
+                    }
+                }
+
+                // -- division line --
+                if (qc.rows.Count == 2 && qc.showDiv && (qc.colType & (ColTyp.fraction))>0) {
+                    int xStart = Utils.min(qc.rows.Select(r => r.rowRect.X).ToArray());
+                    int xEnd = xStart + Utils.max(qc.rows.Select(r => r.rowLen).ToArray())-5;
+                    //int xEnd = xStart + Utils.max(qc.rows.Select(r => r.rowRect.Width).ToArray())-1;
+                    midY = (qc.rows[0].rowRect.Y+ qc.rows[1].rowRect.Y+qc.rows[1].rowRect.Height)/2;
+
+                    // We have exponents ----------------------------
+                    if ((qc.rows[0].columns.Count==1 && qc.rows[0].columns[0].colType==ColTyp.exponent) ||
+                         (qc.rows[1].columns.Count==1 && qc.rows[1].columns[0].colType==ColTyp.exponent) ||
+                          qc.colType == ColTyp.exponent) {
+                        midY-=2;
+                        var midX = xStart+(xEnd-xStart)/2;
+                        var x0 = midX + qc.rows[0].rowRect.Width/2 + qc.rows[0].rowExpLen; // bothBasesMid + (halfMyBase plus exp)
+                        var x1 = midX + qc.rows[1].rowRect.Width/2 + qc.rows[1].rowExpLen; // bothBasesMid + (halfMyBase plus exp)
+                        xEnd = Math.Max(x0, x1); //Extends div line under exp
+                    }
+
+                    // We are an exponent ----------------------------
+                    //if (qc.rows.Any(r => r.colType==ColTyp.exponent)) {
+                    //xEnd = xStart + Utils.max(qc.rows.Select(r => r.rowRect.Width).ToArray())-1;
+                    //xEnd-=4;
+                    //midY-=2;
                     //}
+                    AddLineDraw(Pens.Black, new Point(xStart, midY),
+                                            new Point(xEnd, midY));
                 }
-            }
-
-            // -- division line --
-            if (qc.rows.Count == 2 && qc.showDiv && (qc.colType & (ColTyp.fraction))>0) {
-                int xStart = Utils.min(qc.rows.Select(r => r.rowRect.X).ToArray())+2;
-                int xEnd = xStart + Utils.max(qc.rows.Select(r => r.rowLen).ToArray())-1;
-                //int xEnd = xStart + Utils.max(qc.rows.Select(r => r.rowRect.Width).ToArray())-1;
-                midY = (qc.rows[0].rowRect.Y+ qc.rows[1].rowRect.Y+qc.rows[1].rowRect.Height)/2;
-
-                // We have exponents ----------------------------
-                if ((qc.rows[0].columns.Count==1 && qc.rows[0].columns[0].colType==ColTyp.exponent) ||
-                     (qc.rows[1].columns.Count==1 && qc.rows[1].columns[0].colType==ColTyp.exponent) ||
-                      qc.colType == ColTyp.exponent) {
-                    midY-=2;
-                    var midX = xStart+(xEnd-xStart)/2;
-                    var x0 = midX + qc.rows[0].rowRect.Width/2 + qc.rows[0].rowExpLen; // bothBasesMid + (halfMyBase plus exp)
-                    var x1 = midX + qc.rows[1].rowRect.Width/2 + qc.rows[1].rowExpLen; // bothBasesMid + (halfMyBase plus exp)
-                    xEnd = Math.Max(x0, x1); //Extends div line under exp
-                }
-
-                // We are an exponent ----------------------------
-                //if (qc.rows.Any(r => r.colType==ColTyp.exponent)) {
-                //xEnd = xStart + Utils.max(qc.rows.Select(r => r.rowRect.Width).ToArray())-1;
-                //xEnd-=4;
-                //midY-=2;
-                //}
-                AddLineDraw(Pens.Black, new Point(xStart, midY),
-                                        new Point(xEnd, midY));
-            }
-            // } else {
-            //     var a = "here";
-            // }
+                // } else {
+                //     var a = "here";
+                // }
+            //}
             return rtn;
         }
         public DrawArgsRtns DrawPreColumnOp(qColumn ac, DrawArgsRtns rtn) {
@@ -1009,6 +1075,8 @@ namespace Polish {
                 gr.Clear(backColor);
                 gr.DrawImage(rtn, new PointF(2, 2));
             }
+
+            marginedRtn.Save("C:\\Users\\MyName\\Desktop\\SaveABMP.bmp");
             return marginedRtn;
         }
         public BitmapBuilder Reset() {

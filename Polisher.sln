@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33403.182
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polisher", "Polisher.csproj", "{00CC9E5A-888E-4232-8B14-A7B04DAE8A12}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{00CC9E5A-888E-4232-8B14-A7B04DAE8A12}.Debug|x86.ActiveCfg = Debug|x86
+		{00CC9E5A-888E-4232-8B14-A7B04DAE8A12}.Debug|x86.Build.0 = Debug|x86
+		{00CC9E5A-888E-4232-8B14-A7B04DAE8A12}.Release|x86.ActiveCfg = Release|x86
+		{00CC9E5A-888E-4232-8B14-A7B04DAE8A12}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3B3078DD-BBC4-473E-92AF-DA3AF0C53F0D}
+	EndGlobalSection
+EndGlobal

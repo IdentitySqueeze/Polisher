@@ -121,23 +121,19 @@ namespace Polish {
         public qColumn ToSingleChar(string str, bool ans = true) => ToSingleNumerator(str, ans);
         public qColumn ToSingleInteger(string str, bool ans = false) => ToSingleNumerator(str, ans);
         public qColumn ToSingleNumerator(string str, bool ans) {
-
-
             var rtn = new qColumn();
-            var num = new qColumn();
 
-            num.nodeValue = str;
-            num.answered= ans;
+            var num = new qColumn() {
+                nodeValue = str,
+                answered= ans,
+                parent = rtn,
+                showDiv = false
+            };
 
-            rtn.rows.Add(num);
-            rtn.showDiv = false;
+            rtn.rows.Add(num);           
             return rtn;
         }
         public qColumn ToDoubleNumerator(string str, bool ans) => ToColumnFraction(str, "", ans, true, false);
-        //public answerColumn ToSingleDenominator ( string str ){ }
-        //public answerColumn ToDoubleDenominator ( string str, bool ans ){
-        //    return ToColumnFraction("", str, true, ans, false);
-        //}
         public qColumn CommaColumn() => ToSingleChar(",", true);
         public qColumn OpColumn(string op) => ToSingleChar(op, true);
         public qColumn ToSingleInteger(decimal i) => ToSingleInteger(""+i, false);
@@ -150,36 +146,54 @@ namespace Polish {
         }
 
         public qColumn ToColumnFraction(string txtNum, string txtDen, bool numAns = false, bool denAns = true, bool showDiv = false) {
-            var rtn = new qColumn();
-            var num = new qColumn();
-            var den = new qColumn();
-
-            num.nodeValue = txtNum;
-            den.nodeValue = txtDen;
-            num.answered = numAns;
-            den.answered = denAns;
+            var rtn = new qColumn() { 
+                //showDiv = showDiv
+            };
+            
+            var num = new qColumn() {
+                nodeValue = txtNum,
+                answered = numAns,
+                index=1,
+                parent =rtn,
+                showDiv=true
+            };
+            
+            var den = new qColumn() {
+                nodeValue = txtDen,
+                answered = denAns,
+                index=1,
+                parent =rtn,
+                showDiv = false
+            };
 
             rtn.rows.Add(num);
             rtn.rows.Add(den);
-
-            rtn.showDiv = showDiv;
+            
             return rtn;
         }
         public qColumn ToBracketColumn(string txtNum, string txtDen, bool numAns = false, bool denAns = true, bool showDiv = false) {
             var rtn = new bracketColumn();
             rtn.colType |= ColTyp.fraction;
-            var num = new qColumn();
-            var den = new qColumn();
 
-            num.nodeValue = txtNum;
-            den.nodeValue = txtDen;
-            num.answered = numAns;
-            den.answered = denAns;
+            var num = new qColumn() {
+                index=1,
+                parent =rtn,
+                nodeValue = txtNum,
+                answered = numAns,
+                showDiv = true
+            };
+            var den = new qColumn() {
+                index=2,
+                parent =rtn,
+                answered = denAns,
+                nodeValue = txtDen,
+                showDiv = false
+            };
 
             rtn.rows.Add(num);
             rtn.rows.Add(den);
+            //rtn.showDiv = showDiv;
 
-            rtn.showDiv = showDiv;
             return rtn;
         }
 
@@ -306,6 +320,7 @@ namespace Polish {
     public class qTestQuestionNew : Question {
         public qTestQuestionNew(int id, qParameters qParams) : base(id, qParams) { }
         public override void GenerateQuestion() {
+            #region pre
             var qb = new QuestionBuilder(qParams, queFont);
             var askBuilder = new BitmapBuilder();
 
@@ -351,13 +366,18 @@ namespace Polish {
                 fTerm=FractionUtils.Reduce(seq[i], denom);
                 fTerms.Add(fTerm);
             }
+            #endregion
+
 
             // -- pose ask in shuffled order --
             var shuffled = new List<qColumn>();
+            qColumn col = new qColumn();
             for (i=0, j=1, k=0; i<seq.Count(); i++) {
                 while (ords[k]!=j)
                     k++;
-                shuffled.Add(qb.ToBracketColumn(new FractionLite(fTerms[k].numerator, fTerms[k].denominator)));
+                col = qb.ToBracketColumn(new FractionLite(fTerms[k].numerator, fTerms[k].denominator));
+                //col.index=i;
+                shuffled.Add(col);
                 k=0;
                 j++;
             }
@@ -365,33 +385,44 @@ namespace Polish {
             // -- arrange answer in sequence order --
             possAnswer = new possibleAnswer<qColumn>();
             for (i=0; i<seq.Count()-1; i++) {
-                //possAnswer.answer.Add(qb.ToBracketColumn(fTerms[i]));
-                //possAnswer.answer.Add(qb.CommaColumn());
                 answerColumns.Add(qb.ToBracketColumn(fTerms[i]));
                 answerColumns.Add(qb.CommaColumn());                
             }
-            //possAnswer.answer.Add(qb.ToBracketColumn(fTerms[seq.Count()-1]));
             answerColumns.Add(qb.ToBracketColumn(fTerms[seq.Count()-1]));
 
             topText = $@"Arrange low to high:{qb.br()}";
             topText = topText.Substring(0, topText.Length);
 
-            //Add answer column
-            qColumn answerNode = new qColumn();
-            answerNode.columns.AddRange(answerColumns);
-            possAnswer.answerNode = answerNode;
+            //Add answer
+            // top node's row
+            qColumn ansRow = new qColumn() { index = 1, colsUniformlySpaced = true };
+            ansRow.columns.AddRange(answerColumns);
+            answerColumns.ForEach(ac=>ac.parent = ansRow);
+
+            // top node
+            qColumn ansNode = new qColumn() { index=1};
+            ansNode.rows.Add(ansRow);
+            ansRow.parent=ansNode;
+
+            possAnswer.answerNode = ansNode;
             possAnswer.IsSequence = true;
             possAnswer.uniformSize = true;
             possibleAnswers.Add(possAnswer);
 
-            //askBuilder = new BitmapBuilder(200, 100);
-            //askBuilder.OldAddTextLine(topText, qb.alphaFont, new Point(0, 0));
             askBuilder.AddTextDraw(topText, qb.alphaFont, new Point(0, 0));
 
-            // Add ask column
-            qColumn askNode = new qColumn();
-            askNode.columns.AddRange(shuffled);
-            askBuilder.AddColumnAsNode(askNode, new Point(10, 40));
+            // Add ask 
+            // top node's row
+            qColumn askRow = new qColumn() { index = 1 };
+            askRow.columns.AddRange(shuffled);
+            shuffled.ForEach(n=>n.parent = askRow);
+
+            // top node
+            qColumn askNode = new qColumn() { index = 1 };
+            askNode.rows.Add(askRow);
+            askRow.parent = askNode;
+
+            askBuilder.AddColumnAsNode(askNode, new Point(10, 20));
 
             askBitmap=askBuilder.Commit();
         }

@@ -50,6 +50,11 @@ namespace Polish {
         public string nodeValue { get; set; }
         public bool IsColumn => throw new System.NotImplementedException();
         //public bool IsLeaf => (columns.Count==0);
+        public int innerRootCount { get; set; }
+        public int index { get; set; } = 1;
+        public int colsMaxRowlen { get; set; }
+        public int colsVerticalCentre { get; set; }
+        public bool colsUniformlySpaced { get; set; }
         public bool IsLeaf => nodeValue != null;
         public char? op { get; set; }
         public bool answered { get; set; }
@@ -61,6 +66,8 @@ namespace Polish {
         public newNode parent { get; set; }
         public bool showDiv { get; set; }
         public int rowLen { get; set; }
+        public int rowHeight { get; set; }
+
         public int rowExpLen { get; set; }
         public Rectangle rowRect { get; set; }
         public int charCount { get; set; }
@@ -68,7 +75,6 @@ namespace Polish {
         public Rectangle blockRect { get; set; }
         public Rectangle boundsRect { get; set; }
         public Region[] blockRegions { get; set; }
-
         public bool decorated => throw new System.NotImplementedException();
     }
     public class qColumn : INode<qColumn>, IRenderNode<qColumn> {
@@ -78,8 +84,12 @@ namespace Polish {
         public int from { get; set; }
         public int to { get; set; }
         public bool Infinity { get; set; } = false;
+        public int innerRootCount { get; set; }
         #endregion
-
+        public int index { get; set; } = 1;
+        public int colsMaxRowlen { get; set; }
+        public int colsVerticalCentre { get; set; }
+        public bool colsUniformlySpaced { get; set; }
         public string Hint { get; set; } = "Be more happy.";
         public bool showDiv { get; set; } = true;
         public int outerMax { get; set; }
@@ -106,6 +116,8 @@ namespace Polish {
         public qColumn parent { get; set; }
 
         public int rowLen { get; set; }                                  //If I'm a row, use wholeRow.
+        public int rowHeight { get; set; }
+
         public int rowExpLen { get; set; }
         public Rectangle rowRect { get; set; } = Rectangle.Empty;
         public int charCount { get; set; } = 0;

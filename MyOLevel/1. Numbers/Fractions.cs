@@ -179,6 +179,9 @@ namespace Polish.OLevel.Numbers {
                 fTerms.Add(fTerm);
             }
 
+
+
+
             // -- pose question in shuffled order --
             var shuffled = new List<qColumn>();
             for (i=0, j=1, k=0; i<seq.Count(); i++) {
